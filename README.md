@@ -121,9 +121,9 @@ source .venv/bin/activate
 
 ## 🎬 Live gameplay
 
-[▶ Watch Pixel Clash in action](assets/pixel-clash-demo.mp4)
+![Pixel Clash gameplay demo](assets/pixel-clash-demo.gif)
 
-*Click the link to see a real round of Pixel Clash, including its animations and sound effects.*
+_Click the link to see a real round of Pixel Clash, including its animations and sound effects._
 
 ---
 
