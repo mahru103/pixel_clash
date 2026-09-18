@@ -1,126 +1,134 @@
-# 🪨 Rock Paper Scissors — ✨ Pixel Clash ✨
+<div align="center">
 
-A cozy pastel pixel-art desktop game in Python. CustomTkinter owns the window;
-everything inside is drawn and animated on a `tk.Canvas`, which is what makes
-the hover lifts, sparkles, confetti and sprite animation possible.
+# 🪨 Rock Paper Scissors: Pixel Clash ✨
 
-Created by **Maha**.
+_A cozy pastel pixel-art twist on a classic game._
+
+</div>
+
+<p align="right">
+  A charming desktop Rock–Paper–Scissors game with animated screens, pixel sprites, tiny chiptune sounds, and a very determined computer opponent. Made with 💗 by Maha.
+  <br><br>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-ff80b5?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/UI-Tkinter-9d7be8?style=for-the-badge" alt="Tkinter UI">
+  <img src="https://img.shields.io/badge/Style-Pixel%20Art-f5b544?style=for-the-badge" alt="Pixel Art">
+</p>
 
 ---
 
-## Run it
+## 🌸 A little intro
+
+**Pixel Clash** turns Rock–Paper–Scissors into a tiny pastel arcade experience. Pick your move, face the computer, and play a best-of-3, 5, or 7 match. Every screen has its own personality—from floating hearts and sparkles to victory confetti and rainy defeat scenes.
+
+## 🧰 Technologies
+
+| Technology                 | What it does                                                               |
+| -------------------------- | -------------------------------------------------------------------------- |
+| **Python**                 | Powers the game logic, animation, sound, and app flow.                     |
+| **Tkinter**                | Draws the interactive canvas-based game interface.                         |
+| **CustomTkinter**          | Creates the desktop window and themed container.                           |
+| **winsound / simpleaudio** | Plays the tiny chiptune-style sound effects.                               |
+| **Canvas API**             | Makes the pixel panels, animations, particles, and hover effects possible. |
+
+## ✨ Features
+
+- 🎮 Play best-of-**3, 5, or 7** rounds.
+- 🪨 Choose between animated **rock, paper, and scissors** cards.
+- 🤖 Play against a computer opponent with random moves.
+- 🌟 Enjoy sparkles, confetti, floating hearts, rain, and pixel-art characters.
+- 🔊 Hear short sound effects for hovering, clicks, countdowns, moves, and results.
+- 🔇 Toggle sound from any screen with the **SOUND: ON/OFF** button.
+- 🏆 Get a different ending for victory, defeat, or a draw.
+- 🧪 Run a complete headless gameplay check without opening the window.
+
+## ⌨️ Keyboard shortcuts
+
+| Key   | Action         |
+| ----- | -------------- |
+| `Esc` | Quit the game. |
+
+> Most of Pixel Clash is mouse-friendly: hover over a button for a tiny chirp, then click to play.
+
+## 🧠 The process
+
+1. Started with the Rock–Paper–Scissors rules and a score system.
+2. Split the game into separate screens: welcome, round selection, gameplay, and results.
+3. Built reusable canvas components for buttons, panels, text pops, and sprites.
+4. Added animation timing, particle effects, and different moods for winning and losing.
+5. Added gentle sound effects and a global sound toggle.
+6. Tested the complete game flow with a headless automated check.
+
+## 🏗️ How it is built
+
+The project keeps game rules separate from the visuals so the important logic is easy to test and change.
+
+```text
+main.py
+  └── app.py                 window + screen transitions
+      ├── screens/welcome.py welcome screen
+      ├── screens/rounds.py  round picker
+      ├── screens/gameplay.py match flow and countdown
+      └── screens/results.py victory, defeat, and draw screens
+
+game.py                      Rock–Paper–Scissors rules and score state
+ui.py                        reusable canvas buttons and panels
+anim.py + fx.py              animation clock, particles, backgrounds
+sprites.py + assets.py       pixel sprites, images, and fonts
+audio.py                     sound effects and mute control
+```
+
+## 🌱 What I learned
+
+- How to structure a small Python game into focused, reusable files.
+- How to use a `tk.Canvas` for custom interactive UI instead of standard buttons.
+- How to create smooth animation without freezing the interface.
+- How to handle screen changes cleanly and cancel old timers safely.
+- How to design simple sound effects that add personality without overwhelming the player.
+- Why separating game rules from the UI makes testing much easier.
+
+## 💡 Ideas for future improvements
+
+- Add difficulty levels with smarter computer choices.
+- Save player wins, losses, and streaks between sessions.
+- Add a name picker and a personal high-score board.
+- Let players choose a colour theme or unlock new sprite packs.
+- Add accessibility settings, including larger text and reduced-motion mode.
+- Package the game as a standalone Windows app.
+
+## 🚀 Run the project
 
 ```bash
-python -m venv .venv
-# Windows:  .venv\Scripts\activate
-# macOS/Linux:  source .venv/bin/activate
+# Clone your copy of the project
+git clone https://github.com/YOUR-USERNAME/pixel_clash.git
+cd pixel_clash
 
+# Create and activate a virtual environment
+python -m venv .venv
+.venv\Scripts\activate
+
+# Install the dependency and start the game
 pip install -r requirements.txt
 python main.py
 ```
 
-Press `Esc` to quit. On startup the terminal prints a short asset report
-telling you which fonts were registered and which families Tk actually used —
-check it if the type looks wrong.
-
-Linux also needs Tk itself: `sudo apt install python3-tk`.
-
----
-
-## Fonts
-
-Tk cannot load a font from a file path, so the game registers the files with
-the OS before the window opens (`assets.py`). Put your two files here:
-
-```
-assets/fonts/Miracle History.ttf     ← titles, VICTORY, DEFEAT
-assets/fonts/Pixel Digivolve.otf     ← buttons, scores, labels
-```
-
-If a font does not appear, the *family name inside the file* probably differs
-from the file name. Find it, then put it first in `TITLE_FAMILIES` or
-`PIXEL_FAMILIES` in `config.py`. To list what Tk can see:
-
-```python
-import tkinter, tkinter.font
-root = tkinter.Tk(); print(sorted(tkinter.font.families()))
-```
-
-`tkextrafont` (in requirements) is the most reliable loader on macOS/Linux.
-On Linux the fallback copies the file into `~/.local/share/fonts` and runs
-`fc-cache`, which sometimes needs one restart to take effect. Missing fonts
-never crash the game — it falls back to the next family in the list.
-
-## Your own pixel art
-
-Drop PNGs into `assets/images/` and they replace the built-in sprites
-automatically — no code change. Transparent background, small source size
-(16–32 px) so nearest-neighbour upscaling stays crisp:
-
-```
-rock.png  paper.png  scissors.png
-cat_happy.png  cat_sad.png  trophy.png  robot.png
-heart.png  heart_broken.png  star.png  cloud.png
-```
-
-Until then, the fallbacks in `sprites.py` are drawn from character grids —
-edit a grid string and the sprite changes. Every row of a grid must be the
-same length; `python sprites.py` checks that for you.
-
----
-
-## File map
-
-| File | What lives there |
-| --- | --- |
-| `main.py` | entry point; registers fonts *before* Tk starts |
-| `app.py` | window, screen manager, sliding transitions |
-| `config.py` | palette, window size, font families, round options |
-| `game.py` | pure game rules and state (no UI — easy to test) |
-| `anim.py` | easing, tweens, per-screen frame clock |
-| `fx.py` | sparkles, confetti, rain, animated background |
-| `ui.py` | pixel panels, buttons, choice cards, text pops |
-| `sprites.py` | built-in pixel sprites + renderer |
-| `screens/welcome.py` | title screen with idle-animated moves |
-| `screens/rounds.py` | 3 / 5 / 7 round picker |
-| `screens/gameplay.py` | countdown, choice, computer turn, reveal, result |
-| `screens/results.py` | victory (confetti + cat) and defeat (rain + sad cat) |
-| `tools/headless_check.py` | plays a whole match with no display, for testing |
-
-## Things you will probably want to tweak
-
-- **Timings** — the round intro is one `clock.sequence([...])` block at the top
-  of `GameplayScreen.start_round`. The computer's thinking delay is the
-  `clock.after(1400, ...)` in `computer_thinks`.
-- **Colours** — all of them are in `config.PALETTE`; nothing hardcodes a hex
-  outside `sprites.py`.
-- **Confetti** — `fx.Confetti(count=80, duration=7.0)` in `results.py`.
-- **Screen transition** — `TRANSITION_MS` in `app.py`.
-
-## How the animation works
-
-There is no `time.sleep` anywhere. Each screen owns a `Clock` that ticks at
-~60 fps via `after()`, holds its tweens, and cancels every pending timer when
-the screen is destroyed — that is what stops a half-finished round from firing
-callbacks into a dead canvas.
-
-Buttons are canvas items, not widgets, so hover can lift them a few pixels,
-scale them slightly, blend the fill colour and emit sparkles at the same time.
-
-## Testing without a display
+On macOS/Linux, activate the environment with:
 
 ```bash
-python tools/headless_check.py
+source .venv/bin/activate
 ```
 
-Stubs out Tk, drives a virtual clock, builds all four screens and plays a full
-three-round match. Handy before you commit.
+> **Custom assets:** add your own PNGs in `assets/images/`, fonts in `assets/fonts/`, or WAV sounds in `assets/sounds/` to customise the game.
 
-## Sound
+## 🎬 Live gameplay
 
-Pixel Clash includes short chiptune-style effects for buttons, round starts,
-move selection, reveals, and results. Use the `SOUND: ON/OFF` button in the
-top-right corner on any screen to mute or restore them. On Windows they play
-without extra dependencies; on macOS/Linux install `simpleaudio` if you want
-sound. You can replace any built-in tone by adding a `.wav` file with the same
-name to `assets/sounds/` (for example, `win.wav` or `victory.wav`).
+[▶ Watch Pixel Clash in action](assets/pixel-clash-demo.mp4)
+
+*Click the link to see a real round of Pixel Clash, including its animations and sound effects.*
+
+---
+
+<div align="center">
+
+Made with ✨, pixels, and a little bit of friendly competition.
+
+</div>
